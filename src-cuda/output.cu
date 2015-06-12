@@ -14,6 +14,7 @@ void RISM3D :: output() {
   if (outlist.find("c") != string::npos) flag += 0x04;
   if (outlist.find("g") != string::npos) flag += 0x08;
   if (outlist.find("h") != string::npos) flag += 0x10;
+  if (outlist.find("e") != string::npos) flag += 0x20;
 
   if ((flag & 0x01) == 0x01) {
     double pmv = cal_pmv();
@@ -42,4 +43,10 @@ void RISM3D :: output() {
   if ((flag & 0x10) == 0x10) {
     output_huv();
   }
+
+  if ((flag & 0x20) == 0x20) {
+    double euv = cal_euv();
+    output_euv(euv);
+  }
+
 } 

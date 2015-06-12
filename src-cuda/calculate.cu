@@ -2,15 +2,19 @@
 #include "rism3d.h"
 
 void RISM3D :: calculate (double cf) {
-  __global__ void kh(double * dtr, double * dt, double * du, double * de,
-		     double qv);
-  __global__ void hnc(double * dtr, double * dt, double * du, double * de,
-		      double qv);
-  __global__ void trm1mt(double2 * dguv, double * dtr, double * dt,
-                         double * dfr, double qv);
-  __global__ void mqvfk(double2 * dguv, double2 * dfk, double qv);
-  __global__ void oz(double2 * dhuv, double2 * dguv, double * dx, int natv);
-  __global__ void tr(double2 * dguv, double * dtr, double2 * dhuv);
+  __global__ void kh(double *, const double * __restrict__, 
+		     const double * __restrict__, const double * __restrict__,
+		     double);
+  __global__ void hnc(double * dtr, const double * __restrict__,
+		      const double * __restrict__, const double * __restrict__,
+		      double);
+  __global__ void trm1mt(double2 *, const double * __restrict__, 
+			 const double * __restrict__, const double * __restrict__, 
+			 double);
+  __global__ void mqvfk(double2 *, const double2 * __restrict__, double);
+  __global__ void oz(double2 *, const double2 * __restrict__, 
+		     const double * __restrict__, int);
+  __global__ void tr(double2 *, double *, const double2 * __restrict__);
 
   int ng = ce -> ngrid;
 

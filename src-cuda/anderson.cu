@@ -33,10 +33,10 @@ void AN2 :: initialize (Cell * ce, Solvent * sv) {
 
 
 void AN2 :: calculate (double * dt, double * dtr) {
-  __global__ void newdt0(double * dt, double * dtr,
-			 double * dtp, double * drp);
-  __global__ void newdt(double * dt, double * dtr,
-		       double * dtp, double * drp,
+  __global__ void newdt0(double *, const double * __restrict__,
+			 double *, double *);
+  __global__ void newdt(double *, const double * __restrict__,
+		       double *, double *,
 		      double s1, double s2, double m, int niv, int biv);
   void leg(double * a, double * x, double * b, int n, int nn);
 
@@ -64,8 +64,8 @@ void AN2 :: calculate (double * dt, double * dtr) {
 
 
 void AN2 :: cal_theta (double * dt, double * dtr) {
-  __global__ void theta30(double * ds, double * dtr,
-                          double * drp, int);
+  __global__ void theta30(double *, const double * __restrict__,
+                          const double * __restrict__, int);
   c[0] = c[1] = a[0] = a[1] = a[3] = 0.0;
   for (int iv = 0; iv < niv; ++iv) {
     theta30 <<< g, b, b.x * 5 * sizeof(double) >>>

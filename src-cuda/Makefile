@@ -1,4 +1,4 @@
-CUDA_DIR=/usr/local/cuda-5.0
+CUDA_DIR=/usr/local/cuda
 NUFFT_DIR=../NukadaFFT-1.0
 
 CC 	= g++
@@ -21,6 +21,7 @@ OBJS   	= main.o\
 	  anderson.o\
 	  anderson_cuda.o\
 	  cal_Coulomb.o\
+	  cal_euv.o\
 	  cal_exchem.o\
 	  cal_grad.o\
 	  cal_LJ.o\
@@ -40,6 +41,7 @@ OBJS   	= main.o\
 	  iterate.o\
 	  output.o\
 	  output_cuv.o\
+	  output_euv.o\
 	  output_grad.o\
 	  output_guv.o\
 	  output_huv.o\

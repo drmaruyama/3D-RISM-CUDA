@@ -21,10 +21,11 @@ void FFT3D :: initialize (Cell * ce) {
 
 
 void FFT3D :: execute (double2 * da, int key) {
-  __global__ void timeirvol(double2 * data, int * dir, double vol);
-  __global__ void timekf(double2 * data, double2 * dkf, int * dir);
-  __global__ void timekb(double2 * data, double2 * dkf, 
-			 int * dir, double vol);
+  __global__ void timeirvol(double2 *, const int * __restrict__, double);
+  __global__ void timekf(double2 *, const double2 * __restrict__, 
+			 const int * __restrict__);
+  __global__ void timekb(double2 *, const double2 * __restrict__, 
+			 const int * __restrict__, double);
 
   if (key == - 1) {
     timekf <<< g, b >>> (da, dkf, dir);
@@ -38,7 +39,8 @@ void FFT3D :: execute (double2 * da, int key) {
 }
 
 
-__global__ void timekf(double2 * da, double2 * dkf, int * dir) {
+__global__ void timekf(double2 * da, const double2 * __restrict__ dkf, 
+		       const int * __restrict__ dir) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x
     + blockIdx.y * blockDim.x * gridDim.x;
   double tmpr = da[ip].x * dir[ip];
@@ -48,8 +50,8 @@ __global__ void timekf(double2 * da, double2 * dkf, int * dir) {
 }
 
 
-__global__ void timekb(double2 * da, double2 * dkf,
-		       int * dir, double vol) {
+__global__ void timekb(double2 * da, const double2 * __restrict__ dkf,
+		       const int * __restrict__ dir, double vol) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x
     + blockIdx.y * blockDim.x * gridDim.x;
   double tmpr = da[ip].x * dir[ip] * vol;
@@ -59,7 +61,7 @@ __global__ void timekb(double2 * da, double2 * dkf,
 }
 
 
-__global__ void timeirvol(double2 * da, int * dir, double vol) {
+__global__ void timeirvol(double2 * da, const int * __restrict__ dir, double vol) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x
     + blockIdx.y * blockDim.x * gridDim.x;
   da[ip].x *= dir[ip] * vol;

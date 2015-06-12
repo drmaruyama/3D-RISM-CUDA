@@ -1,4 +1,5 @@
-__global__ void kh(double * dtr, double * dt, double * du, double * de, 
+__global__ void kh(double * dtr, const double * __restrict__ dt, 
+		   const double * __restrict__ du, const double * __restrict__ de, 
 		   double q) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x 
     + blockIdx.y * blockDim.x * gridDim.x;
@@ -10,15 +11,17 @@ __global__ void kh(double * dtr, double * dt, double * du, double * de,
   }
 }
 
-__global__ void hnc(double * dtr, double * dt, double * du, double * de,
+__global__ void hnc(double * dtr, const double * __restrict__ dt, 
+		    const double * __restrict__ du, const double * __restrict__ de,
 		    double q) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x 
     + blockIdx.y * blockDim.x * gridDim.x;
   dtr[ip] = exp(- du[ip] - de[ip] * q + dt[ip]);
 }
 
-__global__ void trm1mt(double2 * dguv, double * dtr, double * dt,
-		       double * dfr, double qv) {
+__global__ void trm1mt(double2 * dguv, const double * __restrict__ dtr, 
+		       const double * __restrict__ dt, 
+		       const double * __restrict__ dfr, double qv) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x 
     + blockIdx.y * blockDim.x * gridDim.x;
   dguv[ip].x = dtr[ip] - 1.0 - dt[ip] + qv * dfr[ip];
@@ -31,14 +34,15 @@ __global__ void pqvfr(double2 * dguv, double * dfr, double qv) {
   dguv[ip].x += qv * dfr[ip];
 }
 
-__global__ void mqvfk(double2 * dguv, double2 * dfk, double qv) {
+__global__ void mqvfk(double2 * dguv, const double2 * __restrict__ dfk, double qv) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x 
     + blockIdx.y * blockDim.x * gridDim.x;
   dguv[ip].x -= qv * dfk[ip].x;
   dguv[ip].y -= qv * dfk[ip].y;
 }
 
-__global__ void oz(double2 * dhuv, double2 * dguv, double * dx, int natv) {
+__global__ void oz(double2 * dhuv, const double2 * __restrict__ dguv, 
+		   const double * __restrict__ dx, int natv) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x 
     + blockIdx.y * blockDim.x * gridDim.x;
   unsigned int ngr = blockDim.x * gridDim.x * gridDim.y;
@@ -53,7 +57,7 @@ __global__ void oz(double2 * dhuv, double2 * dguv, double * dx, int natv) {
   dhuv[ip].y = hi;
 }
 
-__global__ void tr(double2 * dguv, double * dtr, double2 * dhuv) {
+__global__ void tr(double2 * dguv, double * dtr, const double2 * __restrict__ dhuv) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x 
     + blockIdx.y * blockDim.x * gridDim.x;
   dguv[ip].x = dtr[ip];

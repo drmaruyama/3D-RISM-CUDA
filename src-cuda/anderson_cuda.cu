@@ -1,4 +1,4 @@
-__global__ void newdt0 (double * dt, double * dtr,
+__global__ void newdt0 (double * dt, const double * __restrict__ dtr,
                         double * dtp, double * drp) {
     unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x
       + blockIdx.y * blockDim.x * gridDim.x;
@@ -8,7 +8,8 @@ __global__ void newdt0 (double * dt, double * dtr,
 }
 
 
-__global__ void newdt(double * dt, double * dtr, double * dtp, double * drp,
+__global__ void newdt(double * dt, const double * __restrict__ dtr, 
+		      double * dtp, double * drp,
 		      double s1, double s2, double m, int niv, int biv) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x
     + blockIdx.y * blockDim.x * gridDim.x;
@@ -22,7 +23,8 @@ __global__ void newdt(double * dt, double * dtr, double * dtp, double * drp,
 }
 
 
-__global__ void theta30(double * ds, double * dtr, double * drp, int niv) {
+__global__ void theta30(double * ds, const double * __restrict__ dtr, 
+			const double * __restrict__ drp, int niv) {
   extern __shared__ double sdata[];
 
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x

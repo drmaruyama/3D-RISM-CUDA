@@ -8,5 +8,6 @@ const string exthuv = ".huv";
 const string extcuv = ".cuv";
 const string exttuv = ".tuv";
 const string extgra = ".gra";
+const string exteuv = ".euv";
 
 #endif  // EXTENSION_H

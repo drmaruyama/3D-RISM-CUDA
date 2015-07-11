@@ -15,6 +15,7 @@ void RISM3D :: initialize_g() {
 
   double * dg2;
   cudaMalloc(&dgv, ce -> ngrid * sizeof(double4));
+  cudaMalloc(&dindga, ce -> ngrid * sizeof(int));
   cudaMalloc(&dg2, ce -> ngrid * sizeof(double));
 
   set_g <<< g, b >>> (dgv, dg2, ce -> box[0], ce -> box[1], ce -> box[2],
@@ -40,6 +41,8 @@ void RISM3D :: initialize_g() {
     }
     indga[igs] = nga - 1;
   }
+  
+  cudaMemcpyAsync(dindga, indga, ce -> ngrid * sizeof(int), cudaMemcpyDefault);
 
   cudaFree(dg2);
   delete[] g2;

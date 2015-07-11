@@ -5,4 +5,5 @@
 void RISM3D :: set_solvent () {
   sv -> read(fsolvent);
   sv -> spline(ga, indga, nga, ce -> ngrid);
+  sv -> spline2(ga, indga, nga, ce -> ngrid);
 }

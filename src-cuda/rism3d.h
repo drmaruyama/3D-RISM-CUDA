@@ -30,6 +30,7 @@ private:
   void cal_Coulomb ();
   double cal_euv();
   void cal_exchem (double * &);
+  double cal_exdft ();
   void cal_grad (double * &);
   void cal_LJ ();
   double cal_pmv ();
@@ -43,7 +44,7 @@ private:
   void output_grad (double * &);
   void output_guv ();
   void output_huv ();
-  void output_xmu (double * &, double);
+  void output_xmu (double * &, double, double);
   void read_input (char[]);
   void read_tuv ();
   void set_fname (char[]);
@@ -76,10 +77,10 @@ private:
   double4 * dgv;
   double * dsig;
   double * deps;
-  double * dx;
   double * dfr;
   double2 * dfk;
   double * ds;
+  int * dindga;
 
   Cell * ce;
   Control * co;

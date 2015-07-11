@@ -3,7 +3,7 @@
 #include "rism3d.h"
 #include "extension.h"
 
-void RISM3D :: output_xmu(double * & xmu, double pmv) {
+void RISM3D :: output_xmu(double * & xmu, double dft, double pmv) {
     
   ofstream out_file;
   out_file.open((fname + extxmu).c_str());
@@ -20,12 +20,17 @@ void RISM3D :: output_xmu(double * & xmu, double pmv) {
     gf += xmu[sv -> natv + iv];
   }
 
-  out_file << "Solvation Free Energy = " << ibeta * xmua
+  out_file << "SFE (DFT) = " << ibeta * dft
+           << " (kcal/mol)" << endl;
+  out_file << endl;
+
+  out_file << "SFE (SC) = " << ibeta * xmua
 	   << " (kcal/mol)" << endl;
   for (int iv = 0; iv < sv -> natv; ++iv) {
     out_file << "  " << iv << " -----> " << ibeta * xmu[iv] << endl;
   }
   out_file << endl;
+
   out_file << "SFE (GF) = " << ibeta * gf
 	   << " (kcal/mol)" << endl;
   for (int iv = 0; iv < sv -> natv; ++iv) {
@@ -33,6 +38,7 @@ void RISM3D :: output_xmu(double * & xmu, double pmv) {
 	     << endl;
   }
   out_file << endl;
+
   out_file << "PMV  = " << pmv << " (cc/mol)" << endl;
 
   out_file.close();

@@ -21,6 +21,7 @@ void Solvent :: spline (vector <double> & ga, int * & indga,
 
   vector <vector <double *> > xvva2;
   alloc3D (xvva2, natv, natv, nga);
+  alloc3D (cvva, natv, natv, nga);
 
   int ntab1 = 0;
   for (int n = 0; n < ntab; ++n) {
@@ -41,15 +42,30 @@ void Solvent :: spline (vector <double> & ga, int * & indga,
   vector <double *> coe;
   alloc2D(coe, 3, np);
 
+  for (int n = 0; n < np; ++n) {
+    x[n] = ttab[ntab1 + n] ;
+  }
+
   for (int iv2 = 0; iv2 < natv; ++iv2) {
     for (int iv1 = 0; iv1 < natv; ++iv1) {
       for (int n = 0; n < np; ++n) {
-	x[n] = ttab[ntab1 + n] ;
 	y[n] = xvv[iv2][iv1][ntab1 + n] ;
       }
       spline(x, y, np, coe) ;
       for (int i = 0; i < nga; ++i) {
 	xvva2[iv2][iv1][i] = splint(x, y, coe, np, ga[i]);
+      }
+    }
+  }
+
+  for (int iv2 = 0; iv2 < natv; ++iv2) {
+    for (int iv1 = 0; iv1 < natv; ++iv1) {
+      for (int n = 0; n < np; ++n) {
+        y[n] = cvv[iv2][iv1][ntab1 + n] ;
+      }
+      spline(x, y, np, coe) ;
+      for (int i = 0; i < nga; ++i) {
+        cvva[iv2][iv1][i] = splint(x, y, coe, np, ga[i]);
       }
     }
   }

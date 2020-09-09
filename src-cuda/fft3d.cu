@@ -14,7 +14,6 @@ void FFT3D :: initialize (Cell * ce) {
   cudaMalloc(&dkf, ngrid * sizeof(double2));
   cudaMalloc(&dir, ngrid * sizeof(int));
   cufftPlan3d(&plan, ce -> grid[0], ce -> grid[1], ce -> grid[2], CUFFT_Z2Z);
-  cufftSetCompatibilityMode(plan, CUFFT_COMPATIBILITY_NATIVE); 
   set_kf <<< g, b >>> (dkf, ce -> grid[0], ce -> grid[1], ce -> grid[2]);
   set_ir <<< g, b >>> (dir);
 }

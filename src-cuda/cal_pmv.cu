@@ -38,10 +38,15 @@ __global__ void pmv_cuv(double * ds, double2 * dhuv, double * dt) {
   if (threadIdx.x < 32) {
     volatile double *smem = sdata;
     smem[threadIdx.x] += smem[threadIdx.x + 32];
+    __syncwarp();
     smem[threadIdx.x] += smem[threadIdx.x + 16];
+    __syncwarp();
     smem[threadIdx.x] += smem[threadIdx.x + 8];
+    __syncwarp();
     smem[threadIdx.x] += smem[threadIdx.x + 4];
+    __syncwarp();
     smem[threadIdx.x] += smem[threadIdx.x + 2];
+    __syncwarp();
     smem[threadIdx.x] += smem[threadIdx.x + 1];
   }
   if (threadIdx.x == 0) ds[blockIdx.x + blockIdx.y * gridDim.x] = sdata[0];

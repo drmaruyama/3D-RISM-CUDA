@@ -6,7 +6,7 @@ CFLAGS 	= -O3 -fomit-frame-pointer -fopenmp
 
 NVCC	= nvcc
 
-NVFLAGS = -O3 -m64 -gencode=arch=compute_70,code=sm_70  -I$(CUDA_DIR)/include
+NVFLAGS = -O3 -m64 -gencode=arch=compute_70,code=sm_70 -I$(CUDA_DIR)/include
 
 LDFLAGS = -L$(CUDA_DIR)/lib64 
 LIBS = -lcufft -lcuda -lcudart 

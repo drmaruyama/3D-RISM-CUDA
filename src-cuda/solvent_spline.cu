@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <omp.h>
 
 #include "solvent.h"
 
@@ -48,6 +49,7 @@ void Solvent :: spline (vector <double> & ga, int * & indga,
 	y[n] = xvv[iv2][iv1][ntab1 + n] ;
       }
       spline(x, y, np, coe) ;
+#pragma omp parallel for
       for (int i = 0; i < nga; ++i) {
 	xvva2[iv2][iv1][i] = splint(x, y, coe, np, ga[i]);
       }
@@ -62,6 +64,7 @@ void Solvent :: spline (vector <double> & ga, int * & indga,
       } else {
 	wvv = 0.0;
       }
+#pragma omp parallel for
       for (int i = 0; i < nga; ++i) {
 	xvva2[iv2][iv1][i] = wvv + (xvva2[iv2][iv1][i] - wvv); 
       }
@@ -71,6 +74,7 @@ void Solvent :: spline (vector <double> & ga, int * & indga,
   alloc3D(xvva, natv, natv, ngrid);
   for (int iv2 = 0; iv2 < natv; ++iv2) {
     for (int iv1 = 0; iv1 < natv; ++iv1) {
+#pragma omp parallel for
       for (int ig = 0; ig < ngrid; ++ig) {
 	int iga = indga[ig];
 	xvva[iv2][iv1][ig] = xvva2[iv2][iv1][iga];

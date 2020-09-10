@@ -49,6 +49,7 @@ void Solvent :: spline2 (vector <double> & ga, int * & indga,
       y[n] = chs[iv][ntab1 + n] ;
     }
     spline(x, y, np, coe) ;
+#pragma omp parallel for
     for (int i = 0; i < nga; ++i) {
       chsa[iv][i] = splint(x, y, coe, np, ga[i]);
     }
@@ -59,6 +60,7 @@ void Solvent :: spline2 (vector <double> & ga, int * & indga,
       y[n] = wfk[iv][ntab1 + n] ;
     }
     spline(x, y, np, coe) ;
+#pragma omp parallel for
     for (int i = 0; i < nga; ++i) {
       wfka[iv][i] = splint(x, y, coe, np, ga[i]);
     }

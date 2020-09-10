@@ -1,17 +1,14 @@
 CUDA_DIR=/usr/local/cuda
-NUFFT_DIR=../NukadaFFT-1.0
 
 CC 	= g++
 
-CFLAGS 	= -O3 -fomit-frame-pointer 
-#CFLAGS 	= -O3 -fomit-frame-pointer -fopenmp
+CFLAGS 	= -O3 -fomit-frame-pointer -fopenmp
 
 NVCC	= nvcc
 
-#NVFLAGS = -O3 -m64 -arch sm_20 -I$(CUDA_DIR)/include -I$(NUFFT_DIR)/include
-NVFLAGS = -O3 -m64 -gencode=arch=compute_20,code=sm_20 -gencode=arch=compute_35,code=sm_35 -gencode=arch=compute_35,code=compute_35 -I$(CUDA_DIR)/include -I$(NUFFT_DIR)/include
+NVFLAGS = -O3 -m64 -gencode=arch=compute_70,code=sm_70 -I$(CUDA_DIR)/include 
 
-LDFLAGS = -L$(CUDA_DIR)/lib64 -L$(NUFFT_DIR)/lib64
+LDFLAGS = -L$(CUDA_DIR)/lib64 
 LIBS = -lcufft -lcuda -lcudart 
 
 OBJS   	= main.o\

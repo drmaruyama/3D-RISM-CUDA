@@ -8,38 +8,17 @@ void RISM3D :: output_guv() {
     
   cout << "outputting Guv to file:  " << fname + extguv << "  ..." << endl;
 
-  ofstream out_file;
-  out_file.open ((fname + extguv).c_str());
-
-  out_file << ce -> box[0] << " " 
-	   << ce -> box[1] << " " 
-	   << ce -> box[2] << " " 
-	   << endl
-	   << ce -> grid[0] << " " 
-	   << ce -> grid[1] << " " 
-	   << ce -> grid[2] << " " 
-	   << endl 
-	   << su -> num << endl;
-
-  for (int iu = 0; iu < su -> num; ++iu) {
-    int num = iu * 3;
-    out_file << su -> q[iu] << " "
-	     << su -> sig[iu] << " " 
-	     << su -> eps[iu] << " "
-	     << su -> r[num] << " "
-	     << su -> r[num + 1] << " "
-	     << su -> r[num + 2] << endl;
-  }
-  out_file << sv -> natv << endl;
-
-  for (int ig = 0; ig < ce -> ngrid; ++ig) {
-    for (int iv = 0; iv < sv -> natv; ++iv) {
-      out_file << guv[iv][ig].real() << " ";
+  ofstream out_file((fname + extguv).c_str(), ios::out | ios::binary);
+  out_file.write((char *) &(sv -> natv), sizeof(int));
+  out_file.write((char *) &(ce -> grid[0]), sizeof(int) * 3);
+  out_file.write((char *) &(ce -> box[0]), sizeof(double) * 3);
+  for (int iv = 0; iv < sv -> natv; ++iv) {
+    for (int ig = 0; ig < ce -> ngrid; ++ig) {
+      double tmp = guv[iv][ig].real();
+      out_file.write((char *) &tmp, sizeof(double));
     }
-    out_file << endl;
   }
+  out_file.close();
 
   cout << "done." << endl;
-
-  out_file.close();
 } 

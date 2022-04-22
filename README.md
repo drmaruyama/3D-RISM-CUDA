@@ -14,16 +14,14 @@ Solvent: Water (Tip3p model)
 
 Cell: 128^3 Angstrom^3 (256^3 grids)
 
-
-| GPU | Time [s] |
-
-| K20C | 43.8 |
-
-| P100 | 14.5 |
-
-| Titan V | 12.5 |
-
-| V100 | 9.9 |
+<pre>
+GPU      Time [s]
+-----------------
+K20C     43.8
+P100     14.5
+Titan V  12.5
+V100      9.9
+</pre>
 
 ### REFERENCE
 

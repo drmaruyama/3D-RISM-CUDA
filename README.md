@@ -1,20 +1,24 @@
 ### INSTALL
 
 Edit Makefile
+
 make
 
 ### PERFORMANCE
 
 Input: test4.inp
+
 Solute: ProteinG (846 atoms)
+
 Solvent: Water (Tip3p model)
+
 Cell: 128^3 Angstrom^3 (256^3 grids)
 
-| GPU | Time [s] |
-| K20C | 43.8 |
-| P100 | 14.5 |
-| Titan V | 12.5 |
-| V100 | 9.9 |
+1 | GPU | Time [s] |
+2 | K20C | 43.8 |
+3 | P100 | 14.5 |
+4 | Titan V | 12.5 |
+5 | V100 | 9.9 |
 
 ### REFERENCE
 

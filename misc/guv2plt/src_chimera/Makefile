@@ -4,7 +4,7 @@ CFLAGS  = -O3 -fomit-frame-pointer -std=c++11
 
 OBJS	= main.o set_fname.o
 
-PROGRAM = guv2plt
+PROGRAM = guv2plt_chimera
 .cc.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 

@@ -38,11 +38,6 @@ int main (int argc, char * argv[]) {
     input = argv[optind];
   }
 
-  cout << "Input     : " << input << endl;
-  if (!structure.empty()) {
-    cout << "Structure : " << structure << endl;
-  }
-
   cout << "Set device " << dn << endl ;
   cudaSetDevice(dn);
   if (cu > 0) cout << "Charge up " << cu << endl;

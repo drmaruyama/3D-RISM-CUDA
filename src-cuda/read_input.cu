@@ -5,12 +5,12 @@
 #include "rism3d.h"
 #include "version.h"
 
-void RISM3D :: read_input (char inputfile[]) {
+void RISM3D :: read_input (string control, string structure) {
 
   ifstream in_file;
-  in_file.open (inputfile);
+  in_file.open (control.c_str());
 
-  cout << "reading input data file:  " << inputfile << endl;
+  cout << "reading input data file  : " << control << endl;
 
   string check;
   in_file >> outlist >> co -> ksave >> check;
@@ -34,6 +34,12 @@ void RISM3D :: read_input (char inputfile[]) {
   in_file >> ma -> count >> ma -> m >> ma -> mp;
   in_file >> ce -> box[0] >> ce -> box[1] >> ce -> box[2];
   in_file >> ce -> grid[0] >> ce -> grid[1] >> ce -> grid[2];
+
+  if (!structure.empty()) {
+    in_file.close ();
+    in_file.open (structure.c_str());
+    cout << "reading solute data file : " << structure << endl;
+  }
 
   int num;
   in_file >> num;

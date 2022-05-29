@@ -7,11 +7,13 @@ int main (int argc, char * argv[]) {
   RISM3D * system;
   int ch;
   int cu, dn;
+  string input;
+  string structure;
 
   cu = dn = 0;
   system = new RISM3D;
 
-  while ((ch = getopt(argc, argv, "c:d:")) != -1) {
+  while ((ch = getopt(argc, argv, "c:d:i:s:")) != -1) {
     switch (ch){
     case 'c':
       cu = atoi(optarg);
@@ -19,17 +21,27 @@ int main (int argc, char * argv[]) {
     case 'd':
       dn = atoi(optarg);
       break;
+    case 'i':
+      input = optarg;
+      break;
+    case 's':
+      structure = optarg;
+      break;
     }
   }
-  if (argc == 1) {
-    cout << "No parameter file!" << endl ;
-    return (1) ;
+
+  if (input.empty() || structure.empty()) {
+    if (argv[optind] == NULL) {
+      cout << "No input file!" << endl;
+      return (1);
+    }
+    input = argv[optind];
   }
 
   cout << "Set device " << dn << endl ;
   cudaSetDevice(dn);
   if (cu > 0) cout << "Charge up " << cu << endl;
-  system -> initialize(argv[optind]);
+  system -> initialize(input, structure);
   system -> iterate(cu);
   system -> output();    
 

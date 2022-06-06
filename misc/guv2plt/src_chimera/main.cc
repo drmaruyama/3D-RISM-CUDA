@@ -38,21 +38,23 @@ int main(int argc, char * argv[]) {
   int nv;
   int g[3];
   double b[3];
+  double s[3];
   fin.read((char *) &nv, sizeof(int));
   fin.read((char *) &g[0], sizeof(int)*3);
   fin.read((char *) &b[0], sizeof(double)*3);
+  fin.read((char *) &s[0], sizeof(double)*3);
 
   int grid = g[0] * g[1] * g[2];
   double * guv = new double[grid * nv];
   fin.read((char *) &guv[0], sizeof(double) * grid * nv);
   fin.close();
 
-  float xmin = - b[0] / 2 + xs;
-  float ymin = - b[1] / 2 + ys;
-  float zmin = - b[2] / 2 + zs;
-  float xmax = b[0] / 2 + xs;
-  float ymax = b[1] / 2 + ys;
-  float zmax = b[2] / 2 + zs;
+  float xmin = - b[0] / 2 + xs - s[0];
+  float ymin = - b[1] / 2 + ys - s[1];
+  float zmin = - b[2] / 2 + zs - s[2];
+  float xmax = b[0] / 2 + xs - s[0];
+  float ymax = b[1] / 2 + ys - s[1];
+  float zmax = b[2] / 2 + zs - s[2];
 
   int rank = MAGICNUMBER;
   int TypeOfSurface = TYPEOS;

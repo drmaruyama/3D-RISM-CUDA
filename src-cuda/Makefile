@@ -2,7 +2,7 @@ CUDA_DIR=/usr/local/cuda
 
 CC 	= g++
 
-CFLAGS 	= -O3 -fomit-frame-pointer -fopenmp
+CFLAGS 	= -O3 -fomit-frame-pointer -fopenmp -std=c++14
 
 NVCC	= nvcc
 
@@ -54,7 +54,7 @@ OBJS   	= main.o\
 	  spline.o\
 	  splint.o\
 	  write_tuv.o\
-	  
+
 PROGRAM = 3drism-cuda
 
 all:	$(PROGRAM)

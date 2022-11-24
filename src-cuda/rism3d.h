@@ -22,7 +22,7 @@ public:
   RISM3D () {ce = new Cell; co = new Control; su = new Solute;
     sv = new Solvent; ma = new AN2; fft = new FFT3D;}
   ~RISM3D () {delete ce, co, su, sv;} 
-  void initialize (string, string);
+  void initialize (string, string, bool);
   void iterate (int);    
   void output ();
 private:
@@ -45,7 +45,7 @@ private:
   void output_guv ();
   void output_huv ();
   void output_xmu (double * &, double, double);
-  void read_input (string, string);
+  void read_input (string, string, bool);
   void read_tuv ();
   void set_fname (string, string);
   void set_cuda ();

@@ -5,7 +5,7 @@
 #include "rism3d.h"
 #include "version.h"
 
-void RISM3D :: read_input (string control, string structure) {
+void RISM3D :: read_input (string control, string structure, bool centering) {
 
   ifstream in_file;
   in_file.open (control.c_str());
@@ -52,6 +52,10 @@ void RISM3D :: read_input (string control, string structure) {
     in_file >> su -> q[iu] >> su -> sig[iu] >> su -> eps[iu]
 	    >> su -> r[n] >> su -> r[n + 1]
 	    >> su -> r[n + 2];
+  }
+
+  if (centering) {
+    ce -> shift = su -> centering();
   }
 
   in_file.close ();

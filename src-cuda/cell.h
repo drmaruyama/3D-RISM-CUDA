@@ -3,10 +3,16 @@
 
 class Cell {
 public:
-  Cell() {box = new double[3]; dr = new double[3]; grid = new int[3];}
-  ~Cell() {delete[] box, dr, grid;}
+  Cell() {
+    box = new double[3]; 
+    shift = new double[3];
+    dr = new double[3]; 
+    grid = new int[3];
+  }
+  ~Cell() {delete[] box, shift, dr, grid;}
   void setup();
   double * box;
+  double * shift;
   double * dr;
   int * grid;
   double volume, dv;

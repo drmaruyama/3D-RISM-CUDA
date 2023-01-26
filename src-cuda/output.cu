@@ -9,9 +9,10 @@ void RISM3D :: output() {
 
   if (outlist.find("m") != string::npos) {
     double pmv = cal_pmv();
+    double pressure = cal_pressure();
     double * xmu = new double[sv -> natv * 2];
     cal_exchem(xmu);
-    output_xmu(xmu, pmv);
+    output_xmu(xmu, pmv, pressure);
     delete[] xmu;
   }
 

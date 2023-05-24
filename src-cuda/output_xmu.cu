@@ -47,7 +47,6 @@ void RISM3D :: output_xmu(double * & xmu, double pmv, double pressure) {
 
   out_file << "Correction_Term: " << fixed << setprecision(5) 
              << pcterm << " (kcal/mol)" << endl;
-  out_file << endl;
 
   out_file.close();
 } 

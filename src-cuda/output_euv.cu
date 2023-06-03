@@ -8,10 +8,10 @@ void RISM3D :: output_euv (double euv) {
   ofstream out_file;
   out_file.open ((fname + exteuv).c_str());
   
-  double ibeta = avogadoro * boltzmann * sv -> temper / kcal2J;
+  double ibeta = avogadoro * boltzmann * sv -> temper;
   
-  out_file << "Soulte Solvent Interaction Energy = " << ibeta * euv
-	   << " (kcal/mol)" << endl ;
+  out_file << "Soulte_Solvent_Interaction_Energy= " << ibeta * euv
+	   << " (J/mol)" << endl ;
   
   out_file.close () ;
 }

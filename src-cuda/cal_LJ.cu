@@ -26,7 +26,7 @@ void RISM3D :: cal_LJ() {
     for (int iu = 0; iu < su -> num; ++iu) {
       int ip = iu + su -> num * iv;
       siguv[ip] = (su -> sig[iu] + sv -> sigv[iv]) * 0.5;
-      epsuv[ip] = sqrt (su -> eps[iu] * sv -> epsv[iv]) * kcal2J;
+      epsuv[ip] = sqrt (su -> eps[iu] * sv -> epsv[iv] * kcal2J);
     }
   }
 

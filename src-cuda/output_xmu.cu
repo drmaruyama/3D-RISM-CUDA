@@ -42,10 +42,10 @@ void RISM3D :: output_xmu(double * & xmu, double pmv, double pressure) {
   out_file << endl;
 
   out_file << "PMV= " << fixed << setprecision(5)
-           << pmv << " !(cc/mol)" << endl;
+           << pmv * 1000 << " !(L/mol)" << endl;
 
   out_file << "Pressure= " << fixed << setprecision(5)
-           << pressure * kcal2J << " !(J/cc)" << endl;
+           << pressure * kcal2J << " !(J/m^3)" << endl;
 
   out_file << "Correction_Term= " << fixed << setprecision(5) 
              << pcterm << " !(J/mol)" << endl;

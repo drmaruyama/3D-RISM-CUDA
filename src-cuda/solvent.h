@@ -18,12 +18,11 @@ class Solvent {
   double * sigv;
   double * epsv;
   double temper;
-  double xikt;
+  double xt;
   int natv;
  private:
   vector <vector <double *> > xvv;
   double * ttab;
-  int * multv;
   int ntab;
 };
 

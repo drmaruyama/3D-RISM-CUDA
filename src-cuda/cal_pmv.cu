@@ -14,7 +14,9 @@ double RISM3D :: cal_pmv () {
     cuv += s * sv -> rhov[iv];
   }
   cuv = cuv * ce -> dv;
-  double pmv = sv -> xikt * (1.0 - cuv);
+  
+  double ibeta = avogadoro * boltzmann * sv -> temper;
+  double pmv = sv -> xt * (1.0 - cuv) * ibeta;
 
   return pmv;
 }

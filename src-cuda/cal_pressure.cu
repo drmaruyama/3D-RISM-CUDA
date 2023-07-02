@@ -10,10 +10,11 @@ double RISM3D :: cal_pressure () {
     pressure +=  sv -> rhov[iv];
   }
 
-  pressure *= 1.0e24 / avogadoro;
+  pressure *= 1.0e30 / avogadoro;
 
-  pressure = 0.5 * (pressure + 1.0/(sv -> xikt));
-// P/kBT (pressure ) is in [mol/cc]
+  double ibeta = avogadoro * boltzmann * sv -> temper;
+  pressure = 0.5 * (pressure + 1.0 / (sv -> xt * ibeta));
+// P/kBT (pressure ) is in [mol/m^3]
 
   return pressure;
 }

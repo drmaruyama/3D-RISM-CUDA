@@ -71,7 +71,7 @@ void RISM3D :: read_input (string control, string structure, bool centering) {
 
   for (int iu = 0; iu < su -> num; ++iu) {
     int n = iu * 4;
-    in_file >> su -> q[iu] >> su -> sig[iu] >> su -> eps[iu]
+    in_file >> su -> sig[iu] >> su -> eps[iu] >> su -> q[iu]
 	    >> su -> r[n] >> su -> r[n + 1]
 	    >> su -> r[n + 2];
   }

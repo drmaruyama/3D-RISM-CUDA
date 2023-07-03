@@ -23,20 +23,22 @@ void RISM3D :: output_xmu(double * & xmu, double pmv, double pressure) {
 
   double pcterm = - pressure * pmv * ibeta;
 
-  out_file << "SFE(SC)= " << fixed << setprecision(5) 
+  out_file << " $3D-RISM-CUDA" << endl;
+
+  out_file << "SFE_SC= " << fixed << setprecision(5) 
   	   << ibeta * xmua << " !(J/mol)" << endl;
 
   for (int iv = 0; iv < sv -> natv; ++iv) {
-    out_file << "  " << iv << "= " << fixed << setprecision(5) 
+    out_file << "  SFCE_SC(" << iv << ")= " << fixed << setprecision(5) 
              << ibeta * xmu[iv] << endl;
   }
   out_file << endl;
 
-  out_file << "SFE(GF)= " << fixed << setprecision(5) 
+  out_file << "SFE_GF= " << fixed << setprecision(5) 
 	   << ibeta * gf << " !(J/mol)" << endl;
 
   for (int iv = 0; iv < sv -> natv; ++iv) {
-    out_file << "  " << iv << "= " << ibeta * xmu[sv -> natv + iv] 
+    out_file << "  SFEC_GF(" << iv << ")= " << ibeta * xmu[sv -> natv + iv] 
 	     << endl;
   }
   out_file << endl;
@@ -50,5 +52,7 @@ void RISM3D :: output_xmu(double * & xmu, double pmv, double pressure) {
   out_file << "Correction_Term= " << fixed << setprecision(5) 
              << pcterm << " !(J/mol)" << endl;
 
+  out_file << " $END" << endl;
+	    
   out_file.close();
 } 

@@ -1,7 +1,11 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+#include <stdexcept>
 #include "rism3d.h"
 
-void RISM3D :: cal_Coulomb () {
+void RISM3D :: cal_Coulomb (string esp) {
   __global__ void coulomb(double * de, double * dfr,
 			  double4 * dru, double * dqu,
 			  double dx, double dy, double dz,
@@ -9,7 +13,8 @@ void RISM3D :: cal_Coulomb () {
   __global__ void fk(double2 *, const double4 * __restrict__ , 
 		     const double4 * __restrict__ , const double * __restrict__, 
 		     int);
-  __global__ void beta(double * de, double * dfr, double2 * dfk, double ubeta);
+  __global__ void beta(double * dfr, double2 * dfk, double ubeta);
+  __global__ void beta2(double * de, double ubeta);
 
   cout << "synthesizing solute Coulomb potential ..." << endl;
   
@@ -26,8 +31,43 @@ void RISM3D :: cal_Coulomb () {
 
   fk <<< g, b >>> (dfk, dgv, su -> dr, su -> dq, su -> num);
 
-  double ubeta = hartree * bohr / (boltzmann * sv -> temper);
-  beta <<< g, b >>> (de, dfr, dfk, ubeta);
+  double ubeta = hartree2J * bohr / (boltzmann * sv -> temper);
+  beta <<< g, b >>> (dfr, dfk, ubeta);
+
+  if (esp.empty()) {
+    double ubeta = hartree2J * bohr / (boltzmann * sv -> temper);
+    beta2 <<< g, b >>> (de, ubeta);
+  } else {
+    ifstream in_file;
+    in_file.open (esp.c_str());
+    double *e = new double[ce -> ngrid];
+    double dummy;
+
+    for (int i = 0; i < ce -> ngrid; ++i) {
+      string line;
+      string data;
+      getline(in_file, line);
+      stringstream ss(line);
+      ss >> setw(20) >> dummy
+         >> setw(20) >> dummy
+         >> setw(20) >> dummy
+         >> setw(20) >> data;
+      double evalue;
+      try {
+        evalue = stod(data);
+      } catch (const std::invalid_argument& e) {
+        evalue = 0.0;
+      }     
+      e[i] = evalue;
+    }
+    in_file.close();
+
+    cudaMemcpyAsync(de, e, ce -> ngrid * sizeof(double), cudaMemcpyDefault);
+    double ubeta = hartree2J / (boltzmann * sv -> temper);
+    beta2 <<< g, b >>> (de, ubeta);
+    delete[] e;
+  }
+
 } 
 
 
@@ -74,11 +114,16 @@ __global__ void fk(double2 * dfk, const double4 * __restrict__ dgv,
 }
 
 
-__global__ void beta(double * de, double * dfr, double2 * dfk, double ubeta) {
+__global__ void beta(double * dfr, double2 * dfk, double ubeta) {
   unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x
     + blockIdx.y * blockDim.x * gridDim.x;
-  de[ip] *= ubeta;
   dfr[ip] *= ubeta;
   dfk[ip].x *= ubeta;
   dfk[ip].y *= ubeta;
+}
+
+__global__ void beta2(double * de, double ubeta) {
+  unsigned int ip = threadIdx.x + blockIdx.x * blockDim.x
+    + blockIdx.y * blockDim.x * gridDim.x;
+  de[ip] *= ubeta;
 }

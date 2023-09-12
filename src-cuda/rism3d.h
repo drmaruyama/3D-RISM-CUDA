@@ -22,18 +22,18 @@ public:
   RISM3D () {ce = new Cell; co = new Control; su = new Solute;
     sv = new Solvent; ma = new AN2; fft = new FFT3D;}
   ~RISM3D () {delete ce, co, su, sv;} 
-  void initialize (string, string, bool);
+  void initialize (string, string, string, bool);
   void iterate (int);    
   void output ();
 private:
   void add_tuv (double);
-  void cal_Coulomb ();
+  void cal_Coulomb (string);
   double cal_euv();
   void cal_exchem (double * &);
   void cal_grad (double * &);
   void cal_LJ ();
   double cal_pmv ();
-  void cal_potential ();
+  void cal_potential (string);
   double cal_pressure ();
   double cal_rms ();
   void calculate (double);

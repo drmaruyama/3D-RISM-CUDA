@@ -23,7 +23,7 @@ void RISM3D :: output_xmu(double * & xmu, double pmv, double pressure) {
 
   double pcterm = - pressure * pmv * ibeta;
 
-  out_file << " $3D-RISM-CUDA" << endl;
+  out_file << " $RESULT" << endl;
 
   out_file << "SFE_SC= " << fixed << setprecision(5) 
   	   << ibeta * xmua << " !(J/mol)" << endl;

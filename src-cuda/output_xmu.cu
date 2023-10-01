@@ -29,7 +29,7 @@ void RISM3D :: output_xmu(double * & xmu, double pmv, double pressure) {
   	   << ibeta * xmua << " !(J/mol)" << endl;
 
   for (int iv = 0; iv < sv -> natv; ++iv) {
-    out_file << "  SFCE_SC(" << iv << ")= " << fixed << setprecision(5) 
+    out_file << "  SFEC_SC(" << iv << ")= " << fixed << setprecision(5) 
              << ibeta * xmu[iv] << endl;
   }
   out_file << endl;

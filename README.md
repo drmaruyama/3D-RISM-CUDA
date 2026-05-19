@@ -1,3 +1,14 @@
+# NOTICE: Repository Moved to RISMiCal
+
+The development of **3D-RISM-CUDA** has been integrated into the [RISMiCal](https://rismical-dev.github.io/) project. 
+
+This repository (`drmaruyama/3D-RISM-CUDA`) is no longer actively maintained.
+Please use the new official repository for the latest updates and issues:
+
+**New Repository:** [https://github.com/rismical-dev/3D-RISM-CUDA](https://github.com/rismical-dev/3D-RISM-CUDA)
+
+Thank you for your continued support!
+
 ### INSTALL
 
 Edit Makefile
